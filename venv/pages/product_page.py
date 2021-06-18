@@ -18,14 +18,32 @@ class ProductPage(BasePage):
         assert self.is_element_present(*ProductPageLocators.PRODUCT_NAME), \
             f"Product name not found at {self.browser.current_url} url!"
 
+    # Получаем имя продукта
+    def get_product_name(self):
+        product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
+        return product_name
+
+    # Получаем цену продукта
+    def get_product_price(self):
+        product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
+        return product_price
+
+    # Получаем текст сообщения о добавлении товара в корзину
+    def get_adding_message(self):
+        adding_message = self.browser.find_element(*ProductPageLocators.SUCCESSFUL_ADDING_PRODUCT_MESSAGE).text
+        return adding_message
+
+    # Получаем общую стоимость корзины в сообщении о изменении цены корзины
+    def get_changed_total_basket(self):
+        total_basket = self.browser.find_element(*ProductPageLocators.CHANGED_PRICE_BASKET_PRICE_MESSAGE).text
+        return total_basket
+
     # Проверка наличия названия товара в сообщении о успешном добавлении
     def adding_to_basket_message_should_contain_product_name(self):
         self.should_be_product_name()
         self.should_be_adding_to_basket_message()
-        adding_message = self.browser.find_element(*ProductPageLocators.SUCCESSFUL_ADDING_PRODUCT_MESSAGE).text
-        product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME).text
-        assert product_name in adding_message, \
-            f"Message about adding product({self.browser.current_url}) to basket doesn't contains '{product_name}' in it!"
+        assert self.get_product_name() in self.get_adding_message(), \
+            f"Message about adding product({self.browser.current_url}) to basket doesn't contains '{self.get_product_name()}' in it!"
 
     # Проверка наличия сообщения об изменении цены корзины
     def should_be_basket_price_message(self):
@@ -37,11 +55,15 @@ class ProductPage(BasePage):
         assert self.is_element_present(*ProductPageLocators.CHANGED_PRICE_BASKET_PRICE_MESSAGE), \
             f"Changed total price of basket at message on {self.browser.current_url} not found!"
 
+    # Проверка наличия цены продукта на его странице
+    def should_be_product_price(self):
+        assert self.is_element_present(*ProductPageLocators.PRODUCT_PRICE), \
+            f"Product({self.browser.current_url}) price not found!"
+
     # Проверка, что новая общая цена корзины, после добавления товара, соответствует его цене (только если до этого в корзине не было товаров)
     def changing_basket_total_price_after_adding_product(self):
+        self.should_be_product_price()
         self.should_be_basket_price_message()
         self.should_be_basket_changed_price()
-        product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
-        total_basket = self.browser.find_element(*ProductPageLocators.CHANGED_PRICE_BASKET_PRICE_MESSAGE).text
-        assert total_basket == product_price, \
-            f"Total basket price --{total_basket}-- doesn't equals price of added product --{product_price}-- !"
+        assert self.get_changed_total_basket() == self.get_product_price(), \
+            f"Total basket price --{self.get_changed_total_basket()}-- doesn't equals price of added product --{self.get_product_price()}-- !"

@@ -7,10 +7,12 @@ link2 = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handboo
 link3 = "http://selenium1py.pythonanywhere.com/accounts/login/"  # Login page
 link4 = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear"  # 209 book link + new year promo
 link5 = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/hacking-exposed-wireless_208/"
+link6 = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
 
 
-# pytest -s --tb=line --language=en test_product_page.py для пазла
+# pytest -s -v --tb=line --language=en test_product_page.py для пазла
 # pytest -v --tb=line --language=en test_product_page.py
+
 
 @pytest.mark.skip
 def test_user_can_solve_quiz_and_get_code(browser):
@@ -20,8 +22,18 @@ def test_user_can_solve_quiz_and_get_code(browser):
     page.solve_quiz_and_get_code()
 
 
+@pytest.mark.skip
 def test_user_should_see_correct_message_about_adding_product_to_basket(browser):
     page = ProductPage(browser, link5)
     page.open()
     page.adding_to_basket_from_product_page()
+    page.changing_basket_total_price_after_adding_product()
+
+
+@pytest.mark.skip
+def test_user_can_solve_quiz_get_got_and_see_message(browser):
+    page = ProductPage(browser, link6)
+    page.open()
+    page.adding_to_basket_from_product_page()
+    page.solve_quiz_and_get_code()
     page.changing_basket_total_price_after_adding_product()
