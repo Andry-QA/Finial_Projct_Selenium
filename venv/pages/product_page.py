@@ -1,5 +1,6 @@
 from pages.base_page import BasePage
 from pages.locators import ProductPageLocators
+from pages.login_page import LoginPage
 
 class ProductPage(BasePage):
 
@@ -67,3 +68,13 @@ class ProductPage(BasePage):
         self.should_be_basket_changed_price()
         assert self.get_changed_total_basket() == self.get_product_price(), \
             f"Total basket price --{self.get_changed_total_basket()}-- doesn't equals price of added product --{self.get_product_price()}-- !"
+
+    # Проверка, что сообщение о успешном добавлении товара не появляется
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESSFUL_ADDING_PRODUCT_MESSAGE), \
+            F"Success message is presented at {self.browser.current_url}, but should not be!"
+
+    # Проверка, что сообщение о успешном добавлении товара постепенно исчезает
+    def success_message_should_disapeare(self, timer):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESSFUL_ADDING_PRODUCT_MESSAGE, timeout=timer), \
+            F"Success message at {self.browser.current_url} doesn't desapear after --{timer}-- seconds!"

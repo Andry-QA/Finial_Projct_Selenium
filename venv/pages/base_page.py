@@ -1,12 +1,18 @@
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from pages.locators import BasePageLocators
 import math
+import time
+
 
 links = []
 
 class BasePage():
     # Конструктор
-    def __init__(self, browser, url, timeout=3):
+    def __init__(self, browser, url, timeout=5):
         self.browser = browser
         self.url = url
         self.browser.implicitly_wait(timeout)
@@ -23,6 +29,25 @@ class BasePage():
             return False
         return True
 
+    # Метод проверки, что элемент не появляется на странице
+    def is_not_element_present(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+
+        return False
+
+    # Метод проверки что элемент исчезает со временем
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+
+        return True
+
     # Метод получения кода из аллерта, посчитав пример
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
@@ -37,3 +62,18 @@ class BasePage():
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+
+    # Метод перехода по ссылке на страницу логина
+    def go_to_login_page(self):
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        link.click()
+        """
+        alert = self.browser.switch_to.alert
+        alert.accept()
+        return LoginPage(browser=self.browser, url=self.browser.current_url)
+        """
+
+    # Метод проверки, что есть ссылка перехода на логин страницу
+    def should_be_login_link(self):
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), f"Login link at {self.browser.current_url} is not presented!"
