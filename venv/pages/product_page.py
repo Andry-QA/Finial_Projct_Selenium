@@ -30,7 +30,7 @@ class ProductPage(BasePage):
         return product_price
 
     # Получаем текст сообщения о добавлении товара в корзину
-    def get_adding_message(self):
+    def get_adding_message_text(self):
         adding_message = self.browser.find_element(*ProductPageLocators.SUCCESSFUL_ADDING_PRODUCT_MESSAGE).text
         return adding_message
 

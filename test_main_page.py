@@ -1,3 +1,5 @@
+import time
+
 import pytest
 from pages.main_page import MainPage
 from pages.login_page import LoginPage
@@ -24,3 +26,23 @@ def test_guest_should_see_login_link(browser):
     page = MainPage(browser, link1)
     page.open()
     page.should_be_login_link()
+
+
+@pytest.mark.skip
+def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
+    page = MainPage(browser, link1)
+    page.open()
+
+
+#@pytest.mark.skip
+def test_guest_can_see_product_in_basket_opened_from_maim_page(browser):
+    page = MainPage(browser, link1)
+    page.open()
+    page.open_busket_from_main()
+    page.busket_should_be_empty()
+    page.should_be_empty_busket_text()
+
+
+#@pytest.mark.skip
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    pass
