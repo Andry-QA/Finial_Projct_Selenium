@@ -12,7 +12,7 @@ link4 = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handboo
 
 # pytest -v --tb=line --language=en test_main_page.py
 
-@pytest.mark.skip
+
 def test_guest_can_go_to_login_page(browser):
     page = MainPage(browser, link1)  # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес
     page.open()
@@ -21,25 +21,15 @@ def test_guest_can_go_to_login_page(browser):
     login_page.should_be_login_page()
 
 
-@pytest.mark.skip
 def test_guest_should_see_login_link(browser):
     page = MainPage(browser, link1)
     page.open()
     page.should_be_login_link()
 
 
-@pytest.mark.skip
-def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
+def test_guest_cant_see_product_in_basket_opened_from_maim_page(browser):
     page = MainPage(browser, link1)
     page.open()
-
-
-@pytest.mark.skip
-def test_guest_can_see_product_in_basket_opened_from_maim_page(browser):
-    page = MainPage(browser, link1)
-    page.open()
-    page.open_busket_from_main()
-    page.busket_should_be_empty()
-    page.should_be_empty_busket_text()
-
-
+    page.open_basket()
+    page.basket_should_be_empty()
+    page.should_be_empty_basket_text()

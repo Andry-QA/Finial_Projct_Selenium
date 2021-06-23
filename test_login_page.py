@@ -9,35 +9,30 @@ link3 = "http://selenium1py.pythonanywhere.com/accounts/login/"  # Login page
 # pytest -v --tb=line -m login_guest --language=en test_login_page.py
 # pytest -v --tb=line --language=en test_login_page.py
 
-@pytest.mark.skip
 def test_guest_should_be_at_login_page(browser):
     page = LoginPage(browser, link3)
     page.open()
     page.should_be_login_page()
 
 
-@pytest.mark.skip
 def test_guest_should_see_login_in_current_url(browser):
     page = LoginPage(browser, link3)
     page.open()
     page.should_be_login_url()
 
 
-@pytest.mark.skip
 def test_guest_should_see_register_form(browser):
     page = LoginPage(browser, link3)
     page.open()
     page.should_be_register_form()
 
 
-@pytest.mark.skip
 def test_guest_should_see_login_form(browser):
     page = LoginPage(browser, link3)
     page.open()
     page.should_be_login_form()
 
 
-@pytest.mark.skip
 @pytest.mark.login_guest
 class TestLoginFromMainPage:
 
@@ -53,7 +48,6 @@ class TestLoginFromMainPage:
         page.should_be_login_link()
 
 
-@pytest.mark.skip
 def test_guest_can_register_account(browser):
     page = LoginPage(browser, link3)
     page.open()
