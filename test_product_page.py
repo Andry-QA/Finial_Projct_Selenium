@@ -3,6 +3,7 @@ import pytest
 from pages.product_page import ProductPage
 from pages.login_page import LoginPage
 
+
 link1 = "http://selenium1py.pythonanywhere.com/"  # Main page link
 link2 = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209?promo=midsummer"  # 209 book link
 link3 = "http://selenium1py.pythonanywhere.com/accounts/login/"  # Login page
@@ -103,3 +104,26 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     templink = page.browser.current_url
     lpage = LoginPage(browser, templink)
     lpage.should_be_login_page()
+
+
+@pytest.mark.skip
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    page = ProductPage(browser, link8)
+    page.open()
+    page.open_basket()
+    page.basket_should_be_empty()
+    page.should_be_empty_basket_text()
+
+
+class TestUserAddToBasketFromProductPage:
+
+    def test_user_cant_see_success_message(self):
+        page = ProductPage(self, link8)
+        page.open()
+        page.should_not_be_success_message()
+
+    def test_user_can_add_product_to_basket(self):
+        page = ProductPage(self, link8)
+        page.open()
+        page.adding_to_basket_from_product_page()
+        page.changing_basket_total_price_after_adding_product()

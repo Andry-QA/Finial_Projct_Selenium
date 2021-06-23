@@ -78,3 +78,4 @@ class ProductPage(BasePage):
     def success_message_should_disapeare(self, timer):
         assert self.is_disappeared(*ProductPageLocators.SUCCESSFUL_ADDING_PRODUCT_MESSAGE, timeout=timer), \
             F"Success message at {self.browser.current_url} doesn't desapear after --{timer}-- seconds!"
+

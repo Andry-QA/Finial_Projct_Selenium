@@ -77,3 +77,34 @@ class BasePage():
     # Метод проверки, что есть ссылка перехода на логин страницу
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), f"Login link at {self.browser.current_url} is not presented!"
+
+    # Получение кнопки корзины
+    def get_basket_button(self):
+            busket_button = self.browser.find_element(*BasePageLocators.BASKET_BUTTON)
+            return busket_button
+
+    # Получение текста кнопки корзины
+    def get_basket_button_text(self):
+        busket_button = self.browser.find_element(*BasePageLocators.BASKET_BUTTON).text
+        return busket_button
+
+    # Проверка что на данной странице есть кнопка корзины
+    def should_be_basket_button(self):
+        assert self.is_element_present(*BasePageLocators.BASKET_BUTTON), \
+            f"Busket button not found at {self.browser.current_url} url!"
+
+    # Открытие корзины
+    def open_basket(self):
+        self.should_be_basket_button()
+        basket_button = self.get_basket_button()
+        basket_button.click()
+
+    # Проверка что корзина пуста
+    def basket_should_be_empty(self):
+        assert self.is_not_element_present(*BasePageLocators.ITEMS_IN_BASKET), \
+            f"Busket isnt empty, but it sohuld be!"
+
+    # Проверка что есть сообещние о пустой корзине
+    def should_be_empty_basket_text(self):
+        assert self.is_element_present(*BasePageLocators.EMPTY_BUSKET_MESSAGE), \
+            f"Empty busket message not found!"

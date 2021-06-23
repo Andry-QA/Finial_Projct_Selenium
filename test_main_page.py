@@ -34,7 +34,7 @@ def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
     page.open()
 
 
-#@pytest.mark.skip
+@pytest.mark.skip
 def test_guest_can_see_product_in_basket_opened_from_maim_page(browser):
     page = MainPage(browser, link1)
     page.open()
@@ -43,6 +43,3 @@ def test_guest_can_see_product_in_basket_opened_from_maim_page(browser):
     page.should_be_empty_busket_text()
 
 
-#@pytest.mark.skip
-def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
-    pass
