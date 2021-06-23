@@ -116,14 +116,22 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
 
 
 class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        page = LoginPage(browser, link3)
+        page.open()
+        email = str(time.time()) + "@fakemail.com"
+        password = str(time.time()) + "WsQ"
+        page.register_new_user(email, password)
+        page.should_be_authorized_user()
 
-    def test_user_cant_see_success_message(self):
-        page = ProductPage(self, link8)
+    def test_user_cant_see_success_message(self, browser):
+        page = ProductPage(browser, link8)
         page.open()
         page.should_not_be_success_message()
 
-    def test_user_can_add_product_to_basket(self):
-        page = ProductPage(self, link8)
+    def test_user_can_add_product_to_basket(self, browser):
+        page = ProductPage(browser, link8)
         page.open()
         page.adding_to_basket_from_product_page()
         page.changing_basket_total_price_after_adding_product()

@@ -7,6 +7,7 @@ class BasePageLocators():
     BASKET_BUTTON = (By.CSS_SELECTOR, "span a.btn.btn-default")
     ITEMS_IN_BASKET = (By.CSS_SELECTOR, "div.basket-items")
     EMPTY_BUSKET_MESSAGE = (By.CSS_SELECTOR, "div #content_inner  >p")
+    USER_ICON = (By.CSS_SELECTOR, ".icon-user")
 
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")

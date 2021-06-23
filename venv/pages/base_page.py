@@ -108,3 +108,9 @@ class BasePage():
     def should_be_empty_basket_text(self):
         assert self.is_element_present(*BasePageLocators.EMPTY_BUSKET_MESSAGE), \
             f"Empty busket message not found!"
+
+    # Проверка по иконке что пользователь зарегестрирован
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), \
+            "User icon is not presented, probably unauthorised user!"
+

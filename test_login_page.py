@@ -53,7 +53,7 @@ class TestLoginFromMainPage:
         page.should_be_login_link()
 
 
-# @pytest.mark.skip
+@pytest.mark.skip
 def test_guest_can_register_account(browser):
     page = LoginPage(browser, link3)
     page.open()
